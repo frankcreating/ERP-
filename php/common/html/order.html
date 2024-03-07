@@ -1,0 +1,159 @@
+<!DOCTYPE html>  
+<html lang="zh-CN">  
+  
+<head>  
+    <meta charset="GBK"> <!-- 通常建议使用 UTF-8 编码 -->  
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">  
+    <script type="text/javascript" src='../common/js/jquery2.0.min.js'></script>
+    <script type="text/javascript" src='../common/js/input_tips.js'></script>
+    <script type="text/javascript" src='../common/js/html_excel.js'></script>
+    <title>订单展示 - 打印版</title>  
+    <style>  
+ 
+        .stamp {
+            border:6px solid red  ;
+            position: absolute;  
+            left: 45%;  
+            top: 15%;  
+            transform: rotate(30deg);  
+            color: red;  
+            font-size: 44px;  
+            font-weight: bold;  
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);  
+        }  
+
+        /* 通用样式 */  
+        body {  
+            font-family: Arial, sans-serif;  
+            margin: 0;  
+            padding: 0;  
+        }  
+  
+        .order-details {  
+            width: 100%;  
+            border: 1px solid #000;  
+            margin-bottom: 20px;  
+        }  
+  
+        h2,  
+        h3 {  
+            text-align: center;  
+        }  
+  
+        .order-info {  
+            padding: 10px;  
+            border-bottom: 1px dashed #000;  
+        }  
+  
+        .order-info label {  
+            font-weight: bold;  
+            display: inline-block;  
+            width: 120px;  
+        }  
+  
+        .order-info span {  
+            display: inline-block;  
+            width: calc(100% - 130px);  
+        }  
+  
+        table {  
+            width: 100%;  
+            border-collapse: collapse;  
+        }  
+  
+        th,  
+        td {  
+            border: 1px solid #000;  
+            padding: 5px;  
+            text-align: left;  
+        }  
+  
+        /* 打印样式 */  
+        @media print {  
+            body,  
+            .order-details {  
+                margin: 0;  
+                border: none;  
+            }  
+  
+            .order-info {  
+                page-break-inside: avoid;  
+                border-bottom: 1px solid #000;  
+            }  
+  
+            .no-print {  
+                display: none;  
+            }  
+  
+            table,  
+            th,  
+            td {  
+                border: 1px solid #000; /* 如果需要打印时显示边框，则保留此行 */  
+            }  
+        }  
+    </style>  
+</head>  
+  
+<body style="width:80%;margin:auto;margin-top:3%;border:1px solid grey">  
+
+    <table>
+        <?php 
+        if($b_year):
+            $show_data=$b_year;    
+        
+        else:
+            $show_data=date('Y-m-d');
+        endif;
+        ?>
+    
+
+    </table>
+
+
+  
+    
+<table border="1px solid black" id="result_box">
+
+    <?php  
+    $keys = array_keys($res[0]);  
+      
+    // 输出标题行  
+    echo '<tr>';  
+    foreach ($keys as $key => $value):  
+        if(substr($value, -1)<>' '):
+        echo '<td>' . $value . '</td>';  // 使用 <th> 标签来标识标题  
+        endif;
+    endforeach;  
+    echo '</tr>';  
+    // 遍历字典的值，创建表格内容行  
+    foreach ($res as $t => $z):  
+    
+        echo '<tr>';  
+            
+        foreach ($z as $a => $b):  
+        
+        if(substr($a, -1)<>' '):
+            echo '<td>' . $b . '</td>';  
+            endif;
+        endforeach;  
+        echo '</tr>';  
+    endforeach;  
+    ?>
+    
+    </table>
+    </div>  
+  
+   
+  
+    <!-- 导航按钮，在打印时隐藏 -->  
+   
+  
+    <script>
+        var myJsVariable = "<?php echo $input_tips_url; ?>"; 
+        getALLBILLCODE(myJsVariable,tip="<?php echo $order_type; ?>");
+    
+        </script>
+    
+</body>  
+  
+</html>
